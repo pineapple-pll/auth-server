@@ -1,12 +1,12 @@
 package com.pineapple.authserver.service;
 
+import com.pineapple.authserver.dto.JwtDto;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.spec.SecretKeySpec;
-import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
 import java.util.Date;
@@ -19,7 +19,7 @@ public class AuthService {
 
     private Logger logger = LoggerFactory.getLogger(AuthService.class);
 
-    public String makeJwt(HttpServletRequest res) throws Exception {
+    public String makeJwt(JwtDto jwtDto) throws Exception {
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
         Date expireTime = new Date();
         expireTime.setTime(expireTime.getTime() + 1000 * 60 * 1);
@@ -34,8 +34,8 @@ public class AuthService {
 
         Map<String, Object> map= new HashMap<String, Object>();
 
-        String name = res.getParameter("name");
-        String email = res.getParameter("email");
+        String name = jwtDto.getName();
+        String email = jwtDto.getEmail();
 
         map.put("name", name);
         map.put("email", email);
