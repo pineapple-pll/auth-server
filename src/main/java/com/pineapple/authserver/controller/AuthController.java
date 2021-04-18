@@ -1,35 +1,39 @@
 package com.pineapple.authserver.controller;
 
 
+import com.pineapple.authserver.response.Response;
 import com.pineapple.authserver.service.AuthService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/v1/auth-server/jwt")
 @CrossOrigin
 public class AuthController {
-    @Autowired
-    private AuthService authService;
 
-    @PostMapping("/jwt/create")
-    public String createJwt(HttpServletRequest res) throws Exception {
+    private final AuthService authService;
 
-        return authService.makeJwt(res);
+    @PostMapping("/create")
+    public ResponseEntity createJwt(HttpServletRequest res) throws Exception {
+
+        Response response = new Response(0, authService.makeJwt(res));
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
-    @GetMapping("/jwt/auth")
-    public boolean authToken(HttpServletRequest res) throws Exception {
+    @GetMapping("/auth")
+    public ResponseEntity authToken(HttpServletRequest res) throws Exception {
         String jwt = res.getParameter("jwt");
 
         if(jwt == null) {
-            return false;
+            return new ResponseEntity(false, HttpStatus.OK);
         }else {
-            return authService.checkJwt(jwt);
+            return new ResponseEntity(true, HttpStatus.OK);
         }
     }
 }

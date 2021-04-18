@@ -7,16 +7,15 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
-import java.nio.charset.StandardCharsets;
+import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
-import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
 public class AuthService {
-    private String secretKey = "ThisisHyoJunSecretKeyWelcomeMyFirstJwt";
+    private String secretKey = "ThisisPineappleSecretKeyWelcomeMyFirstJwt";
 
     private Logger logger = LoggerFactory.getLogger(AuthService.class);
 
@@ -24,12 +23,9 @@ public class AuthService {
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
         Date expireTime = new Date();
         expireTime.setTime(expireTime.getTime() + 1000 * 60 * 1);
-        //여기
-        byte[] secret = secretKey.getBytes(StandardCharsets.UTF_8);
-        String apiKeySecretBytes = Base64.getEncoder().encodeToString(secret);
+        byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(secretKey);
 
         Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
-        //여기
 
         Map<String, Object> headerMap = new HashMap<String, Object>();
 
@@ -54,11 +50,8 @@ public class AuthService {
 
     public boolean checkJwt(String jwt) throws Exception {
         try {
-            //여기
-
             Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(secretKey))
                     .parseClaimsJws(jwt).getBody(); // 정상 수행된다면 해당 토큰은 정상토큰
-            //여기
 
             logger.info("expireTime :" + claims.getExpiration());
             logger.info("name :" + claims.get("name"));
@@ -67,9 +60,11 @@ public class AuthService {
             return true;
         } catch (ExpiredJwtException exception) {
             logger.info("토큰 만료");
+            // TODO : Exception 으로 리턴하기
             return false;
         } catch (JwtException exception) {
             logger.info("토큰 변조");
+            // TODO : Exception 으로 리턴하기
             return false;
         }
     }
