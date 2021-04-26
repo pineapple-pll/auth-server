@@ -17,4 +17,14 @@ public class MemberRepository {
         return em.createQuery("select m from Member m", Member.class)
                 .getResultList();
     }
+
+    public void save(Member member) {
+        em.persist(member);
+    }
+
+    public List<Member> findByName(String memberId) {
+        return em.createQuery("select m from Member m where m.memberId = :memberId", Member.class)
+                .setParameter("memberId", memberId)
+                .getResultList();
+    }
 }

@@ -21,6 +21,8 @@ public class MemberDto {
     private String email;
     private String password;
 
+    public MemberDto() {}
+
     public MemberDto(Member member) {
         this.memberId = member.getMemberId();
         this.name = member.getName();
