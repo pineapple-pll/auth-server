@@ -32,8 +32,7 @@ public class AuthController {
     public ResponseEntity authToken(@RequestParam("jwt") String jwt) throws Exception {
         if(jwt == null) {
             return new ResponseEntity(false, HttpStatus.OK);
-        }else {
-            return new ResponseEntity(authService.checkJwt(jwt), HttpStatus.OK);
         }
+        return new ResponseEntity(authService.checkJwt(jwt), HttpStatus.OK);
     }
 }
