@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/auth-server/members")
+@RequestMapping("/auth/members")
 public class MemberController {
 
     private final MemberService memberService;
@@ -29,9 +29,20 @@ public class MemberController {
     }
 
     /**
+     * 로그인
+     */
+    @PostMapping("signin")
+    public ResponseEntity loginMember(@RequestBody MemberDto memberDto) throws Exception {
+
+        String jwt = memberService.loginMember(memberDto);
+
+        return new ResponseEntity(jwt, HttpStatus.OK);
+    }
+
+    /**
      * 회원 가입
      */
-    @PostMapping
+    @PostMapping("signup")
     public ResponseEntity saveMember(@RequestBody MemberDto memberDto) {
 
         Member member = new Member();

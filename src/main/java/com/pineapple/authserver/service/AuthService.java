@@ -34,11 +34,13 @@ public class AuthService {
 
         Map<String, Object> map= new HashMap<String, Object>();
 
-        String name = jwtDto.getName();
-        String email = jwtDto.getEmail();
+//        String name = jwtDto.getName();
+//        String email = jwtDto.getEmail();
+        String memberId = jwtDto.getMemberId();
 
-        map.put("name", name);
-        map.put("email", email);
+//        map.put("name", name);
+//        map.put("email", email);
+        map.put("memberId", memberId);
 
         JwtBuilder builder = Jwts.builder().setHeader(headerMap)
                 .setClaims(map)

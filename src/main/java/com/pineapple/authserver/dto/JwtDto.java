@@ -7,6 +7,5 @@ import org.springframework.validation.annotation.Validated;
 @Data
 public class JwtDto {
 
-    private String name;
-    private String email;
+    private String memberId;
 }

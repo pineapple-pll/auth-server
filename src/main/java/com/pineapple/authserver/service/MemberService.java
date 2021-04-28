@@ -1,6 +1,7 @@
 package com.pineapple.authserver.service;
 
 import com.pineapple.authserver.domain.Member;
+import com.pineapple.authserver.dto.JwtDto;
 import com.pineapple.authserver.dto.MemberDto;
 import com.pineapple.authserver.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,8 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+
+    private final AuthService authService;
 
     /**
      * 회원 전체 조회
@@ -51,6 +54,30 @@ public class MemberService {
         if (!findMembers.isEmpty()) {
             throw new IllegalStateException("이미 존재하는 회원입니다.");
         }
+    }
+
+    /**
+     * 로그인
+     */
+    @Transactional
+    public String loginMember(MemberDto memberDto) throws Exception {
+
+        String memberId = memberDto.getMemberId();
+        String password = memberDto.getPassword();
+
+        Member member = memberRepository.findByMemberId(memberId);
+
+        boolean isSuccess = passwordEncoder.matches(password, member.getPassword());
+
+        if(!isSuccess) {
+            throw new IllegalStateException("로그인 실패");
+        }
+
+        JwtDto jwtDto = new JwtDto();
+        jwtDto.setMemberId(memberId);
+        String jwt = authService.makeJwt(jwtDto);
+
+        return jwt;
     }
 }
 
