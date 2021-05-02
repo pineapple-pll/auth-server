@@ -1,8 +1,10 @@
 package com.pineapple.authserver.service;
 
+import com.pineapple.authserver.constant.MemberErrorCode;
 import com.pineapple.authserver.domain.Member;
 import com.pineapple.authserver.dto.JwtDto;
 import com.pineapple.authserver.dto.MemberDto;
+import com.pineapple.authserver.exception.PineException;
 import com.pineapple.authserver.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -52,7 +54,7 @@ public class MemberService {
     private void validateDuplicateMember(Member member) {
         List<Member> findMembers = memberRepository.findByName(member.getMemberId());
         if (!findMembers.isEmpty()) {
-            throw new IllegalStateException("이미 존재하는 회원입니다.");
+            throw new PineException(MemberErrorCode.DUPLICATEMEMBER);
         }
     }
 
@@ -70,7 +72,7 @@ public class MemberService {
         boolean isSuccess = passwordEncoder.matches(password, member.getPassword());
 
         if(!isSuccess) {
-            throw new IllegalStateException("로그인 실패");
+            throw new PineException(MemberErrorCode.SIGNINFAIL);
         }
 
         JwtDto jwtDto = new JwtDto();
