@@ -3,6 +3,7 @@ package com.pineapple.authserver.domain;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Data
@@ -13,6 +14,7 @@ public class Member {
     private Long id;
     @Column(name = "member_id")
     private String memberId;
+    @NotEmpty
     private String name;
     private int age;
     private String gender;

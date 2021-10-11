@@ -4,6 +4,7 @@ import com.pineapple.authserver.domain.Member;
 import com.pineapple.authserver.dto.MemberDto;
 import com.pineapple.authserver.response.Response;
 import com.pineapple.authserver.service.MemberService;
+import com.pineapple.authserver.service.MemberSineUpService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import java.util.List;
 public class MemberController {
 
     private final MemberService memberService;
+    private final MemberSineUpService memberSineUpService;
 
     @GetMapping()
     public ResponseEntity list() {
@@ -59,7 +61,7 @@ public class MemberController {
         member.setPhone(memberDto.getPhone());
         member.setProfile(memberDto.getProfile());
 
-        Long id = memberService.join(member);
+        Long id = memberSineUpService.doSignUp(member);
         return new ResponseEntity(memberDto.getName(), HttpStatus.OK);
     }
 }
