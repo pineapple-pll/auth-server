@@ -1,6 +1,7 @@
 package com.pineapple.authserver.service;
 
 import com.pineapple.authserver.domain.Member;
+import com.pineapple.authserver.dto.request.SignUpRequest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,12 +33,6 @@ class MemberSineUpServiceTest {
     void doSignUp() {
         sequence++;
         //given
-
-        Member member = new Member();
-        member.setMemberId("test" + sequence);
-        member.setName("테스트");
-        member.setPassword(passwordEncoder.encode("passwd"));
-        System.out.println(member.toString());
         //when
         //then
 

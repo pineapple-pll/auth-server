@@ -2,6 +2,7 @@ package com.pineapple.authserver.controller;
 
 import com.pineapple.authserver.domain.Member;
 import com.pineapple.authserver.dto.MemberDto;
+import com.pineapple.authserver.dto.request.SignUpRequest;
 import com.pineapple.authserver.response.Response;
 import com.pineapple.authserver.service.MemberService;
 import com.pineapple.authserver.service.MemberSineUpService;
@@ -45,22 +46,8 @@ public class MemberController {
      * 회원 가입
      */
     @PostMapping("signup")
-    public ResponseEntity saveMember(@RequestBody MemberDto memberDto) {
-
-        Member member = new Member();
-        member.setMemberId(memberDto.getMemberId());
-        member.setActive(memberDto.getActive());
-        member.setAddress(memberDto.getAddress());
-        member.setAge(memberDto.getAge());
-        member.setCountry(memberDto.getCountry());
-        member.setEmail(memberDto.getEmail());
-        member.setGender(memberDto.getGender());
-        member.setName(memberDto.getName());
-        member.setPassword(memberDto.getPassword());
-        member.setPhone(memberDto.getPhone());
-        member.setProfile(memberDto.getProfile());
-
-        Long id = memberSineUpService.doSignUp(member);
-        return new ResponseEntity(memberDto.getName(), HttpStatus.OK);
+    public ResponseEntity saveMember(@RequestBody SignUpRequest signUpRequest) {
+        Long id = memberSineUpService.doSignUp(signUpRequest);
+        return new ResponseEntity(id, HttpStatus.OK);
     }
 }
