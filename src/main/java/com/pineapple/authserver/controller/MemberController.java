@@ -56,7 +56,6 @@ public class MemberController {
         member.setEmail(memberDto.getEmail());
         member.setGender(memberDto.getGender());
         member.setName(memberDto.getName());
-
         member.setPassword(memberDto.getPassword());
         member.setPhone(memberDto.getPhone());
         member.setProfile(memberDto.getProfile());
