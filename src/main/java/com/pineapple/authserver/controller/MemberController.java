@@ -45,7 +45,7 @@ public class MemberController {
     /**
      * 회원 가입
      */
-    @PostMapping("signup")
+    @PostMapping("/signup")
     public ResponseEntity saveMember(@RequestBody SignUpRequest signUpRequest) {
         Long id = memberSineUpService.doSignUp(signUpRequest);
         return new ResponseEntity(id, HttpStatus.OK);

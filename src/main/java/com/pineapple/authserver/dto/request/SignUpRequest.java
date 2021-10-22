@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class SignUpRequest {
     private String memberId;
     private String name;
-    private int age;
+    private Integer age;
     private String gender;
     private String address;
     private String profile;
@@ -20,7 +20,7 @@ public class SignUpRequest {
     private String email;
     private String password;
 
-    public SignUpRequest(String memberId, String name, int age, String gender, String address, String profile, String active, String country, String phone, String email, String password) {
+    public SignUpRequest(String memberId, String name, Integer age, String gender, String address, String profile, String active, String country, String phone, String email, String password) {
         this.memberId = memberId;
         this.name = name;
         this.age = age;

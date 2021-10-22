@@ -20,7 +20,7 @@ public class Member {
     private String memberId;
     @NotEmpty
     private String name;
-    private int age;
+    private Integer age;
     private String gender;
     private String address;
     private String profile;
@@ -31,7 +31,7 @@ public class Member {
     private String password;
 
     @Builder(builderClassName = "SignUpBuilder", builderMethodName = "SignUpBuilder")
-    public Member(String memberId, @NotEmpty String name, int age,
+    public Member(String memberId, @NotEmpty String name, Integer age,
                   String gender, String address, String profile,
                   String active, String country, String phone, String email,
                   String password) {
